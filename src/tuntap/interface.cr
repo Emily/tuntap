@@ -87,7 +87,7 @@ module Tuntap
       route.metric = LibC::Short.new(metric + 1)
       route.mtu = LibC::ULong.new(mtu)
       route.window = LibC::ULong.new(window)
-      route.dev = @name.to_slice.pointer(@name.size)
+      route.dev = @name.to_slice.to_unsafe
       ioctl(LibC::SIOCADDRT, route)
     end
 

@@ -22,14 +22,14 @@ module Tuntap
     # Returns the PI header.  If this packet does not have it, the returned
     # header will contain junk data.
     def pi : Header::Pi
-      ptr = @frame.pointer(sizeof(Header::Pi))
+      ptr = @frame.to_unsafe
       ptr.as(Header::Pi*).value
     end
 
     # Returns the ethernet header.  If this packet does not have it, the
     # returned header will contain junk data.
     def ethernet : Header::Ethernet
-      ptr = without_pi.pointer(sizeof(Header::Ethernet))
+      ptr = without_pi.to_unsafe
       ptr.as(Header::Ethernet*).value
     end
 
@@ -65,7 +65,7 @@ module Tuntap
     # Returns the IPv4 header from the packet.  No check is done if the packet
     # really contains IPv4 data.
     def ipv4 : Header::Ipv4
-      ptr = without_ethernet.pointer(sizeof(Header::Ipv4))
+      ptr = without_ethernet.to_unsafe
       ptr.as(Header::Ipv4*).value
     end
 
