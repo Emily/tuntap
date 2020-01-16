@@ -60,6 +60,11 @@ module Tuntap
       clone_dev.blocking = false
       clone_dev.sync = true
       name_len = (ifr.ifrn_name[LibC::IFNAMSIZ - 1] == 0) ? LibC.strlen(ifr.ifrn_name.to_unsafe) : LibC::IFNAMSIZ
+
+      pp! ifru.hwaddr
+      pp! ifru.addr
+      pp! ifru.dstaddr
+
       new(clone_dev, String.new(ifr.ifrn_name.to_unsafe, name_len), flags)
     rescue error
       clone_dev.try(&.close)
